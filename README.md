@@ -1,0 +1,41 @@
+# Gexport
+Manage and synchronize environment variables between interactive shell sessions for Bash and Zsh.
+
+Functions similarly to `set -U` in Fish, just for Bash / Zsh. 
+
+## Installation
+### Requirements
+- Bash: [bash-preexec.sh](https://github.com/rcaloras/bash-preexec)
+- Zsh: -
+
+### Cargo
+```shell
+cargo install gexport
+```
+
+### Manual
+For manual installation (change the target according to your system).
+```shell
+curl https://github.com/Flachz/gexport/releases/latest/download/gexport-x86_64-unknown-linux-musl.tar.xz -o gexport.tar.xz
+tar xJf gexport.tar.xz
+sudo mv gexport /usr/local/bin
+```
+
+## Setup
+### Bash
+Ensure [bash-preexec.sh](https://github.com/rcaloras/bash-preexec) is installed and is
+correctly initialized. For initialization of bash-preexec you should have something similar
+to this in your .bashrc:
+```shell
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+```
+
+Then to setup gexport itself:
+```shell
+echo 'eval "$(gexport --init bash)"' >> ~/.bashrc
+```
+
+### Zsh
+```shell
+echo 'eval "$(gexport --init zsh)"' >> ~/.zshrc
+```
