@@ -1,0 +1,82 @@
+# Based on typst's release action:
+# https://github.com/typst/typst/blob/main/.github/workflows/release.yml
+
+name: Build Release Binaries
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-release:
+    name: release ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            cross: true
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            cross: true
+          - target: armv7-unknown-linux-musleabi
+            os: ubuntu-latest
+            cross: true
+          - target: riscv64gc-unknown-linux-gnu
+            os: ubuntu-latest
+            cross: true
+          - target: x86_64-apple-darwin
+            os: macos-latest
+            cross: false
+          - target: aarch64-apple-darwin
+            os: macos-latest
+            cross: false
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          target: ${{ matrix.target }}
+
+      - name: Run Cross
+        if: ${{ matrix.cross }}
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross.git --locked --rev 88f49ff7
+          cross build --release --target ${{ matrix.target }}
+
+      - name: Run Cargo
+        if: ${{ !matrix.cross }}
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: create artifact directory
+        shell: bash
+        run: |
+          directory=gexport-${{ matrix.target }}
+          mkdir $directory
+          cp README.md LICENSE $directory
+          cp target/${{ matrix.target }}/release/gexport $directory
+          tar cJf $directory.tar.xz $directory
+
+      - uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "gexport-${{ matrix.target }}.*"
+          allowUpdates: true
+          omitNameDuringUpdate: true
+          omitBodyDuringUpdate: true
+
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      - uses: katyo/publish-crates@v2
+        with:
+          registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
