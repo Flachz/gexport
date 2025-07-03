@@ -16,12 +16,11 @@ cargo install gexport
 ```
 
 ### Manual
-For manual installation (change version to the correct value according to your system).
+For manual installation (choose URL based on release and your target platform):
 ```shell
-version='gexport-x86_64-unknown-linux-musl'
-curl https://github.com/Flachz/gexport/releases/latest/download/${version}.tar.xz -o gexport.tar.xz
-tar xJf gexport.tar.xz
-sudo cp ${version}/gexport /usr/local/bin
+curl <URL> -o gexport.tar.xz && mkdir gexport
+tar xJf --strip-components gexport.tar.xz -C gexport
+sudo cp gexport/gexport /usr/local/bin
 ```
 
 ## Setup
