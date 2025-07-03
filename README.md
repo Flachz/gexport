@@ -1,7 +1,9 @@
 # Gexport
 Manage and synchronize environment variables between interactive shell sessions for Bash and Zsh.
 
-Functions similarly to `set -U` in Fish, just for Bash / Zsh. 
+Functions similarly to `set -U` in Fish, just for Bash / Zsh and with syntax based on
+standard POSIX `export`.
+
 
 ## Installation
 ### Requirements
