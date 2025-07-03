@@ -33,7 +33,7 @@ jobs:
             os: ubuntu-latest
             cross: true
           - name: riscv64gc-linux
-            target: riscv64gc-unknown-linux-musl
+            target: riscv64gc-unknown-linux-gnu
             os: ubuntu-latest
             cross: true
           - name: x86_64-darwin
