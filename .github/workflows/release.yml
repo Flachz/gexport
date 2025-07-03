@@ -64,7 +64,7 @@ jobs:
       - name: create artifact directory
         shell: bash
         run: |
-          directory=gexport-${{ matrix.target }}
+          directory=gexport-${{ github.event.release.tag_name }}-${{ matrix.name }}
           mkdir $directory
           cp README.md LICENSE $directory
           cp target/${{ matrix.target }}/release/gexport $directory
