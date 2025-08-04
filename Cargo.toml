@@ -9,7 +9,7 @@ authors = ["Thomas Strom"]
 description = "Manage and synchronize environment variables between interactive shell sessions for Bash and Zsh."
 
 [dependencies]
-clap = { version = "4.5.40", features = ["derive", "env"] }
+clap = { version = "4.5.42", features = ["derive", "env"] }
 clap-stdin = "0.6.0"
 colored = "3.0.0"
 regex = "1.11.1"
