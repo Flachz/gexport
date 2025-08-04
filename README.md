@@ -16,12 +16,8 @@ cargo install gexport
 ```
 
 ### Manual
-For manual installation (choose URL based on release and your target platform):
-```shell
-curl <URL> -o gexport.tar.xz && mkdir gexport
-tar xJf --strip-components gexport.tar.xz -C gexport
-sudo cp gexport/gexport /usr/local/bin
-```
+[Download release binary](https://github.com/Flachz/gexport/releases/latest) and extract to `/usr/local/bin`
+for system-wide install or `~/.local/bin` for user install.
 
 ## Setup
 ### Bash
