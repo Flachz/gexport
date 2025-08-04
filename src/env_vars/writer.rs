@@ -82,16 +82,17 @@ impl WriteManager {
             .append(true)
             .open(&location)?;
         
+        let lines;
         FileExt::lock_shared(&file)?;
-        
-        let mut reader = BufReader::new(&file);
-        let mut data = Vec::new();
-        reader.read_to_end(&mut data)?;
-        let lines = String::from_utf8_lossy(&data)
-            .lines()
-            .map(str::to_string)
-            .collect::<Vec<_>>();
-        
+        {
+            let mut reader = BufReader::new(&file);
+            let mut data = Vec::new();
+            reader.read_to_end(&mut data)?;
+            lines = String::from_utf8_lossy(&data)
+                .lines()
+                .map(str::to_string)
+                .collect::<Vec<_>>();
+        }
         FileExt::unlock(&file)?;
         
         Ok(Self {
