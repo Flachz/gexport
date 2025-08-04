@@ -182,12 +182,11 @@ impl WriteManager {
         EnvironmentVariable::from_lines(&lines)
             .iter()
             .try_for_each(EnvironmentVariable::delete)?;
+        
+        let mut this = Self::get_mut()?;
 
         lines.into_iter()
-            .try_for_each(|line| {
-                Self::get_mut()?.append(line);
-                Ok::<_, WriterError>(())
-            })?;
+            .for_each(|line| this.append(line));
 
         Ok(())
     }
