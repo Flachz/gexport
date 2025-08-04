@@ -58,6 +58,7 @@ pub(crate) struct Cli {
     pub(crate) init: Option<Shell>,
     
     #[arg(long)]
+    #[arg(hide = true)]
     #[arg(env = "XDG_CONFIG_HOME")]
     #[arg(default_value_os_t = get_default_config_dir())]
     pub(crate) config_home: PathBuf,
