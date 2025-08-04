@@ -182,12 +182,19 @@ impl WriteManager {
         EnvironmentVariable::from_lines(&lines)
             .iter()
             .try_for_each(EnvironmentVariable::delete)?;
-        
+
         let mut this = Self::get_mut()?;
 
         lines.into_iter()
             .for_each(|line| this.append(line));
 
+        Ok(())
+    }
+
+    pub(crate) fn clear() -> Result<(), WriterError> {
+        let mut this = Self::get_mut()?;
+        this.lines.clear();
+        this.rewrite = true;
         Ok(())
     }
     

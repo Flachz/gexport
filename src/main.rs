@@ -31,6 +31,8 @@ fn main() -> ExitCode {
         export(args);
     } else if let Some(data) = &CLI.import {
         import(data);
+    } else if CLI.clear {
+        clear();
     } else {
         print();
     }
@@ -100,6 +102,12 @@ fn print() {
             Err(error) => print_error(&error),
         }
     }
+}
+
+fn clear() {
+    WriteManager::clear()
+        .and_then(|_| WriteManager::finalize())
+        .inspect_err(|error| print_error(error)).ok();
 }
 
 impl Display for Shell {

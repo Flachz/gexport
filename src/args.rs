@@ -13,10 +13,17 @@ use clap_stdin::FileOrStdin;
 \tgexport [-udn] <NAME[=VALUE]>...
 \tgexport --import [FILE]
 \tgexport --init <SHELL>
+\tgexport --clear
 ")]
 pub(crate) struct Cli {
     #[command(flatten)]
     pub(crate) args: Option<GexportArgs>,
+
+    /// Delete all stored variables.
+    #[arg(long)]
+    #[arg(conflicts_with_all = ["print", "import", "init"])]
+    #[arg(verbatim_doc_comment)]
+    pub(crate) clear: bool,
 
     /// Prints all the globally exported environment variables. 
     /// 
@@ -25,7 +32,7 @@ pub(crate) struct Cli {
     #[arg(short, long)]
     #[arg(value_name = "NAME")]
     #[arg(num_args = 0..)]
-    #[arg(conflicts_with_all = ["init", "import"])]
+    #[arg(conflicts_with_all = ["init", "import", "clear"])]
     #[arg(verbatim_doc_comment)]
     pub(crate) print: Option<Vec<OsString>>,
 
@@ -37,7 +44,7 @@ pub(crate) struct Cli {
     #[arg(value_name = "FILE")]
     #[arg(default_missing_value = "-")]
     #[arg(num_args = 0..=1)]
-    #[arg(conflicts_with_all = ["print", "init"])]
+    #[arg(conflicts_with_all = ["print", "init", "clear"])]
     #[arg(verbatim_doc_comment)]
     pub(crate) import: Option<FileOrStdin>,
     
@@ -46,7 +53,7 @@ pub(crate) struct Cli {
     #[arg(long)]
     #[arg(value_name = "SHELL")]
     #[arg(value_enum)]
-    #[arg(conflicts_with_all = ["print", "import"])]
+    #[arg(conflicts_with_all = ["print", "import", "clear"])]
     #[arg(verbatim_doc_comment)]
     pub(crate) init: Option<Shell>,
     
@@ -63,7 +70,7 @@ pub(crate) enum Shell {
 }
 
 #[derive(Args)]
-#[group(conflicts_with_all = ["init", "print", "import"])]
+#[group(conflicts_with_all = ["init", "print", "import", "clear"])]
 pub(crate) struct GexportArgs {
     /// Environment variables to be globally exported.
     /// 
