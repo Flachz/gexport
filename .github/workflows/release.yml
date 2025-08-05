@@ -70,7 +70,7 @@ jobs:
           cp target/${{ matrix.target }}/release/gexport $directory
           tar cJf $directory.tar.xz $directory
 
-      - uses: ncipollo/release-action@v1.14.0
+      - uses: ncipollo/release-action@v1.18.0
         with:
           artifacts: "gexport-${{ github.event.release.tag_name }}-${{ matrix.name }}.*"
           allowUpdates: true
