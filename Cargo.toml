@@ -11,7 +11,7 @@ categories = ["command-line-utilities"]
 keywords = ["export", "bash", "zsh", "environment", "variables"]
 
 [dependencies]
-clap = { version = "4.5.42", features = ["derive", "env"] }
+clap = { version = "4.5.43", features = ["derive", "env"] }
 clap-stdin = "0.6.0"
 colored = "3.0.0"
 regex = "1.11.1"
