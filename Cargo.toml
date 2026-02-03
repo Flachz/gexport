@@ -14,7 +14,7 @@ keywords = ["export", "bash", "zsh", "environment", "variables"]
 clap = { version = "4.5.45", features = ["derive", "env"] }
 clap-stdin = "0.6.0"
 colored = "3.0.0"
-regex = "1.11.1"
+regex = "1.12.3"
 itertools = "0.14.0"
 fs2 = "0.4.3"
 
